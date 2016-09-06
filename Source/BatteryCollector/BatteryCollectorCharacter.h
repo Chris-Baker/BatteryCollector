@@ -15,6 +15,11 @@ class ABatteryCollectorCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
+    
+    /** Collection Sphere */
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+    class USphereComponent* CollectionSphere;
+    
 public:
 	ABatteryCollectorCharacter();
 
@@ -52,6 +57,10 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
+    /** Called when we press a key to collect any pickups inside the collection sphere */
+    UFUNCTION(BlueprintCallable, Category = "Pickups")
+    void CollectPickups();
+    
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
@@ -62,5 +71,7 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+    /** Returns CollectionSphere subobject **/
+    FORCEINLINE class USphereComponent* GetCollectionSphere() const { return CollectionSphere; }
 };
 
