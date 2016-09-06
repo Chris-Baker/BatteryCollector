@@ -26,11 +26,33 @@ public:
     /** Find a random point within the box component */
     UFUNCTION(BlueprintPure, Category = "Spawning")
     FVector GetRandomPointInVolume();
+
+protected:
+    
+    /** the pickup to spawn */
+    UPROPERTY(EditAnywhere, Category = "Spawning")
+    TSubclassOf<class APickup> WhatToSpawn;
+    
+    /**  */
+    FTimerHandle SpawnTimer;
+    
+    /** minimum spawn delay */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
+    float SpawnDelayRangeLow;
+    
+    /** maximum spawn delay */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
+    float SpawnDelayRangeHigh;
     
 private:
     
     /** Box component to specify where pickups should be spawned */
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawning", meta = (AllowPrivateAccess = "true"))
     class UBoxComponent* WhereToSpawn;
-	
+    
+    /** Handle the spawning in the pickup */
+    void SpawnPickup();
+    
+    /** the current spawn delay */
+    float SpawnDelay;
 };
