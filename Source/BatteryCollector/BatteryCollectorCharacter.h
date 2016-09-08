@@ -30,7 +30,21 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
-
+    
+    /** Accessor function for initial power */
+    UFUNCTION(BlueprintPure, Category = "Power")
+    float GetInitialPower();
+    
+    /** Accessor function for current power */
+    UFUNCTION(BlueprintPure, Category = "Power")
+    float GetCurrentPower();
+    
+    /** mutator function for current power 
+     * @param PowerChange this is the amount to change the power by, can be positive or negative
+     */
+    UFUNCTION(BlueprintCallable, Category = "Power")
+    void UpdatePower(float PowerChange);
+    
 protected:
 
 	/** Called for forwards/backward input */
@@ -57,15 +71,26 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
-    /** Called when we press a key to collect any pickups inside the collection sphere */
-    UFUNCTION(BlueprintCallable, Category = "Pickups")
-    void CollectPickups();
-    
 protected:
+    
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
 
+    /** Called when we press a key to collect any pickups inside the collection sphere */
+    UFUNCTION(BlueprintCallable, Category = "Pickups")
+    void CollectPickups();
+    
+    /** the starting power level of our character */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power")
+    float InitialPower;
+    
+private:
+    
+    /** the current power level of our character */
+    UPROPERTY(VisibleAnywhere, Category = "Power")
+    float CharacterPower;
+    
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
