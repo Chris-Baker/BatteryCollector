@@ -21,4 +21,14 @@ public:
     
 	/** Override the Collected function - use _Implementation here because it is a Blueprint native event */
     void Collected_Implementation();
+    
+    /** Return how much power this battery has */
+    float GetBatteryPower();
+    
+protected:
+    
+    /** Set the amount of power the battery gives to the character */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power", Meta = (BlueprintProtected = "true"))
+    float BatteryPower;
+
 };

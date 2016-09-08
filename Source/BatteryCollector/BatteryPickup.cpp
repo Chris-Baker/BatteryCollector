@@ -17,4 +17,12 @@ void ABatteryPickup::Collected_Implementation() {
     
     // destroy the battery
     Destroy();
+    
+    // set default battery power
+    BatteryPower = 150.0f;
+}
+
+// report the power level of the battery
+float ABatteryPickup::GetBatteryPower() {
+    return BatteryPower;
 }
