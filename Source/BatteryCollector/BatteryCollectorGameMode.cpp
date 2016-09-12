@@ -3,6 +3,7 @@
 #include "BatteryCollector.h"
 #include "BatteryCollectorGameMode.h"
 #include "BatteryCollectorCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 ABatteryCollectorGameMode::ABatteryCollectorGameMode()
 {
@@ -12,4 +13,25 @@ ABatteryCollectorGameMode::ABatteryCollectorGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
+    
+    // base decay rate
+    DecayRate = 0.01f;
+}
+
+void ABatteryCollectorGameMode::Tick(float DeltaTime) {
+    
+    Super::Tick(DeltaTime);
+    
+    ABatteryCollectorCharacter* Character = Cast<ABatteryCollectorCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
+    if(Character) {
+        
+        if(Character->GetCurrentPower() > 0) {
+            Character->UpdatePower(-DeltaTime * DecayRate * (Character->GetCurrentPower()));
+            
+            if(Character->GetCurrentPower() < 0) {
+                Character->UpdatePower(0);
+            }
+            
+        }
+    }
 }
