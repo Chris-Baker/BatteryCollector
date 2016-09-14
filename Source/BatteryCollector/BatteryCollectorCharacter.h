@@ -93,6 +93,10 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power", Meta = (BlueprintProtected = "true"))
     float BaseSpeed;
     
+    /** a visual effect implemented in blueprints */
+    UFUNCTION(BlueprintImplementableEvent, Category = "Power")
+    void PowerChangeEffect();
+    
 private:
     
     /** the current power level of our character */

@@ -200,5 +200,8 @@ void ABatteryCollectorCharacter::UpdatePower(float PowerChange) {
     
     // change speed based on power
     GetCharacterMovement()->MaxWalkSpeed = BaseSpeed + SpeedFactor * CharacterPower;
+    
+    // call visual effect
+    PowerChangeEffect();
 }
 
