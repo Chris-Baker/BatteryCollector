@@ -13,12 +13,21 @@ public:
     
     virtual void Tick(float DeltaTime) override;
     
+    /** Returns power to win - needed for the HUD */
+    UFUNCTION(BlueprintPure, Category = "Power")
+    float GetPowerToWin() const;
+    
+    virtual void BeginPlay() override;
+    
 protected:
     
     /** The rate at which the character loses power */
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Power")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Power", Meta = (BlueprintProtected))
     float DecayRate;
     
+    /** The amount of power needed to win the game */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Power", Meta = (BlueprintProtected))
+    float PowerToWin;
 };
 
 
