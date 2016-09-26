@@ -4,6 +4,7 @@
 #include "BatteryCollectorGameMode.h"
 #include "BatteryCollectorCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "Blueprint/UserWidget.h"
 
 ABatteryCollectorGameMode::ABatteryCollectorGameMode()
 {
@@ -27,6 +28,10 @@ void ABatteryCollectorGameMode::BeginPlay() {
     if(Character) {
         PowerToWin = (Character->GetInitialPower()) * 1.25f;
     }
+    
+    if (HUDWidgetClass != nullptr) {
+        CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), HUDWidgetClass);
+    }
 }
 
 void ABatteryCollectorGameMode::Tick(float DeltaTime) {
@@ -45,4 +50,8 @@ void ABatteryCollectorGameMode::Tick(float DeltaTime) {
             
         }
     }
+}
+
+float ABatteryCollectorGameMode::GetPowerToWin() const {
+    return 0;
 }
